@@ -5,7 +5,7 @@ import subprocess
 from pathlib import Path
 
 from src.kml_autoanalyzer.args import Arguments
-from src.config.system import get_default_threads
+from src.kml_autoanalyzer.system import get_default_threads
 from src.config.software import BCL2FASTQ
 
 logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
