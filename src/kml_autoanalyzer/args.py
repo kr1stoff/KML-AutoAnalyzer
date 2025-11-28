@@ -4,11 +4,12 @@ from pathlib import Path
 
 @dataclass
 class Arguments:
-    flow_cell_id: str
+    run_id: str
     bcls_dir: str
     samplesheet: str
     output_dir_str: str
     interval: int
+    barocode_mismatchs: int
     threads: int
 
     def __post_init__(self):
