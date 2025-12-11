@@ -23,6 +23,8 @@ logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %
 @click.help_option("--help", help="显示帮助信息")
 def main(run_id, bcls_dir, samplesheet, output_dir, interval, barocode_mismatchs, threads):
     logging.info("开启 bcl2fastq bcl 自动拆分")
+    logging.info(f"参数:\nRUN ID: {run_id}\nBCL 目录: {bcls_dir}\n样本信息表: {samplesheet}\n输出目录: {output_dir}\n"
+                 f"检查间隔: {interval}\nbarcode 允许的错配数: {barocode_mismatchs}\n线程数: {threads}")
     args = Arguments(run_id, bcls_dir, samplesheet, output_dir, interval, barocode_mismatchs, threads)
     ilmn_bcl2fastq(args)
     logging.info("bcl2fastq bcl 自动拆分完成")
