@@ -12,20 +12,19 @@ logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %
 
 
 @click.command()
-# ! 芯片号不够清晰, 用批次号
-@click.option("--run-id", required=True, help="测序批次编号")
-@click.option("--bcls-dir", required=True, help="Illumina 测序仪下机数据存放目录")
+# [20251218 芯片号->批次号->完整路径]
+@click.option("--runfolder-dir", required=True, help="下机数据 BCL 目录")
 @click.option("--samplesheet", required=True, help="样本信息表")
-@click.option("--output-dir", required=True, help="输出 fastq 目录")
+@click.option("--output-dir", required=True, help="输出 FASTQ 目录")
 @click.option("--interval", default=300, type=int, show_default=True, help="检查间隔时间，单位为秒")
 @click.option("--barocode-mismatchs", default=1, type=int, show_default=True, help=" barcode 允许的错配数")
 @click.option("--threads", default=get_default_threads(), type=int, show_default=True, help="线程数")
 @click.help_option("--help", help="显示帮助信息")
-def main(run_id, bcls_dir, samplesheet, output_dir, interval, barocode_mismatchs, threads):
+def main(runfolder_dir, samplesheet, output_dir, interval, barocode_mismatchs, threads):
     logging.info("开启 bcl2fastq bcl 自动拆分")
-    logging.info(f"参数:\nRUN ID: {run_id}\nBCL 目录: {bcls_dir}\n样本信息表: {samplesheet}\n输出目录: {output_dir}\n"
+    logging.info(f"参数:\nBCL 目录: {runfolder_dir}\n样本信息表: {samplesheet}\n输出目录: {output_dir}\n"
                  f"检查间隔: {interval}\nbarcode 允许的错配数: {barocode_mismatchs}\n线程数: {threads}")
-    args = Arguments(run_id, bcls_dir, samplesheet, output_dir, interval, barocode_mismatchs, threads)
+    args = Arguments(runfolder_dir, samplesheet, output_dir, interval, barocode_mismatchs, threads)
     ilmn_bcl2fastq(args)
     logging.info("bcl2fastq bcl 自动拆分完成")
 
@@ -33,19 +32,18 @@ def main(run_id, bcls_dir, samplesheet, output_dir, interval, barocode_mismatchs
 def ilmn_bcl2fastq(args: Arguments):
     while True:
         # 检查 bcl 文件是否存在
-        runfolder = Path(args.bcls_dir).joinpath(args.run_id)
-        if runfolder.exists():
-            logging.info(f"发现 bcl 文件: {runfolder}")
+        if args.runfolder_dir.exists():
+            logging.info(f"发现 bcl 文件: {args.runfolder_dir}")
             # 检查是否测序完成
-            if runfolder.joinpath("CopyComplete.txt").exists():
-                logging.info(f"测序完成: {runfolder}")
+            if args.runfolder_dir.joinpath("CopyComplete.txt").exists():
+                logging.info(f"测序完成: {args.runfolder_dir}")
                 # bcl2fastq
                 with open(args.output_dir / "auto-analyzor.log", "w") as f:
                     cmd = f"""
 {BCL2FASTQ} --no-lane-splitting --barcode-mismatches {args.barocode_mismatchs} \
     --processing-threads {args.threads} \
-    --runfolder-dir {runfolder} \
-    --input-dir {runfolder}/Data/Intensities/BaseCalls \
+    --runfolder-dir {args.runfolder_dir} \
+    --input-dir {args.runfolder_dir}/Data/Intensities/BaseCalls \
     --sample-sheet {args.samplesheet} \
     --output-dir {args.output_dir}
 """
@@ -65,9 +63,9 @@ def ilmn_bcl2fastq(args: Arguments):
                     f.write(res.stdout + "\n" + res.stderr + "\n")
                 break
             else:
-                logging.info(f"测序中: {runfolder}")
+                logging.info(f"测序中: {args.runfolder_dir}")
         else:
-            logging.info(f"未发现 bcl 文件: {args.run_id}")
+            logging.info(f"未发现 BCL 文件目录: {args.runfolder_dir}")
         time.sleep(args.interval)
         continue
 

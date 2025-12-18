@@ -20,5 +20,5 @@
     参数 mismatch 0
 
     ```bash
-    poetry run python -m src.kml_autoanalyzer.ilmn_bcl2fastq --run-id 251210_NB501947_0956_AHCLLLAFXC --bcls-dir /data/rawdata/illumina/NEXTseq500 --samplesheet /data/mengxf/Project/KML251210_HAOBOHBV_AHCLLLAFXC/251210_NB501947_0956_AHCLLLAFXC-samplesheet.csv --output-dir /data/mengxf/Project/KML251210_HAOBOHBV_AHCLLLAFXC/FASTQ --barocode-mismatchs 0
+    poetry run python -m src.kml_autoanalyzer.ilmn_bcl2fastq --runfolder-dir /data/rawdata/illumina/NEXTseq500/251217_NB501947_0957_AHCLYFAFXC  --samplesheet /data/mengxf/Project/KML251217_HAOBOHBV_AHCLYFAFXC/251217_NB501947_0957_AHCLYFAFXC-samplesheet.csv --output-dir /data/mengxf/Project/KML251217_HAOBOHBV_AHCLYFAFXC/FASTQ --barocode-mismatchs 0
     ```
