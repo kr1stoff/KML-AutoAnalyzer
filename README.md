@@ -1,6 +1,6 @@
 # KML-AutoAnalyzer
 
-- ilmn_bcl2fastq: 运行 bcl2fastq 命令, 校验 fastq md5sum  
+- ilmn_bcl2fastq: 运行 bcl2fastq 命令, 校验 fastq md5sum
 
     ```text
     Usage: python -m src.kml_autoanalyzer.ilmn_bcl2fastq [OPTIONS]
@@ -16,9 +16,9 @@
     --help                        显示帮助信息
     ```
 
-  - 例子  
+  - 例子
     参数 mismatch 0
 
     ```bash
-    poetry run python -m src.kml_autoanalyzer.ilmn_bcl2fastq --runfolder-dir /data/rawdata/illumina/NEXTseq500/251217_NB501947_0957_AHCLYFAFXC  --samplesheet /data/mengxf/Project/KML251217_HAOBOHBV_AHCLYFAFXC/251217_NB501947_0957_AHCLYFAFXC-samplesheet.csv --output-dir /data/mengxf/Project/KML251217_HAOBOHBV_AHCLYFAFXC/FASTQ --barocode-mismatchs 0
+    poetry run ilmn-bcl2fastq --runfolder-dir /data/rawdata/illumina/NEXTseq500/251217_NB501947_0957_AHCLYFAFXC --samplesheet /data/mengxf/Project/KML251217_HAOBOHBV_AHCLYFAFXC/251217_NB501947_0957_AHCLYFAFXC-samplesheet.csv --output-dir /data/mengxf/Project/KML251217_HAOBOHBV_AHCLYFAFXC/FASTQ --barocode-mismatchs 0
     ```
