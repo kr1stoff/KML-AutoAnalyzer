@@ -22,10 +22,16 @@ logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %
 @click.help_option("--help", help="显示帮助信息")
 def main(runfolder_dir, samplesheet, output_dir, interval, barocode_mismatchs, threads):
     logging.info("开启 bcl2fastq bcl 自动拆分")
-    logging.info(f"参数:\nBCL 目录: {runfolder_dir}\n样本信息表: {samplesheet}\n输出目录: {output_dir}\n"
-                 f"检查间隔: {interval}\nbarcode 允许的错配数: {barocode_mismatchs}\n线程数: {threads}")
+    logging.info(f"参数: BCL 目录: {runfolder_dir}")
+    logging.info(f"参数: 样本信息表: {samplesheet}")
+    logging.info(f"参数: 输出目录: {output_dir}")
+    logging.info(f"参数: 检查间隔: {interval}")
+    logging.info(f"参数: barcode 允许的错配数: {barocode_mismatchs}")
+    logging.info(f"参数: 线程数: {threads}")
+
     args = Arguments(runfolder_dir, samplesheet, output_dir, interval, barocode_mismatchs, threads)
     ilmn_bcl2fastq(args)
+
     logging.info("bcl2fastq bcl 自动拆分完成")
 
 
